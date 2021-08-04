@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Reports</title>
+
+    <th:block th:include="fragments :: styles"></th:block>
+	<th:block th:include="fragments :: dataTableCSS"></th:block>
+	<th:block th:include="fragments :: customCSS"></th:block>
+  </head>
+
+  <body>
+    <!-- container section start -->
+    <section id="container" class="">
+      <th:block th:include="fragments :: header"></th:block>
+      <!--header end-->
+
+      <!--sidebar start-->
+      <th:block th:include="fragments :: sidebar"></th:block>
+      <!--sidebar end-->
+
+    <!--main content start-->
+    <section id="main-content">
+      <section class="wrapper">
+        <div class="row">
+          <div class="col-lg-12">
+            <h3 class="page-header"><i class="fa fa fa-bars"></i> Pages</h3>
+            <ol class="breadcrumb">
+              <li><i class="fa fa-home"></i><a href="/dashboard">Home</a></li>
+              <li><i class="fa fa-bars"></i>Report</li>
+            </ol>
+          </div>
+        </div>
+        <!-- page start-->
+        Trial Balance (Report) is generated here
+        <div class="row">
+					<div class="col-lg-12">
+						<div class="col-lg-12">
+							<div class="container-fluid" style="width:100%">
+								<h2>Trial Balance </h2>
+								<table class="table table-striped table-bordered" id="dataTable" aria-label="dataTable">
+									<thead>
+										<tr>
+											<th>Account Name</th>
+											<th>Debit</th>
+											<th>Credit</th>
+										</tr>
+									</thead>
+									<tbody>
+										<th:block th:each="tb : ${trialBalance}">
+											<tr>
+												<!--<td th:text="${tb.id}"></td>-->
+												<td th:text="${tb.acc_name}"></td>
+												<td th:text="${tb.debit}"></td>
+												<td th:text="${tb.credit}"></td>
+											</tr>
+										</th:block>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+        <!-- page end-->
+      </section>
+
+    <th:block th:include="fragments :: footer"></th:block>
+      </section>
+      <!--main content end-->
+    </section>
+
+    <th:block th:include="fragments :: javascripts"></th:block>
+	<th:block th:include="fragments :: dataTableJS"></th:block>
+	<th:block th:include="fragments :: customJS"></th:block>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--<html lang="en">-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<title>Login</title>
+
+	<th:block th:include="fragments :: styles"></th:block>
+	<th:block th:include="fragments :: customCSS"></th:block>
+
+</head>
+
+<body class="login-img3-body">
+	<div class="container">
+		<div class="login-form">
+			<div class="login-wrap">
+				<form th:action="@{/verifyLogin}" th:object="${user}" method="post">
+					<p class="login-img"><i class="icon_lock_alt"></i></p>
+					<input type="hidden" th:field="*{id}" />
+					<div class="input-group">
+						<span class="input-group-addon"><i class="icon_profile"></i></span>
+						<input type="text" th:field="*{username}" class="form-control" placeholder="Username" autofocus />
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon"><i class="icon_key_alt"></i></span>
+						<input type="password" th:field="*{password}" class="form-control" placeholder="Password" />
+					</div>
+					<label class="checkbox">
+						<input type="checkbox" value="remember-me" /> Remember me
+						<span class="pull-right"> <a href="#"> Forgot Password?</a></span>
+					</label>
+					<button class="btn btn-primary btn-lg btn-block" type="submit">
+						Login
+					</button>
+				</form>
+				<form th:action="@{/signup}" style="padding-top: 1vw;">
+					<button class="btn btn-info btn-lg btn-block" type="submit">
+						Signup
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
