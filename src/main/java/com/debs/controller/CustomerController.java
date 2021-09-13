@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.debs.model.Customer;
+import com.debs.service.AccountService;
 import com.debs.service.CustomerService;
 
 @Controller
@@ -18,6 +19,12 @@ public class CustomerController {
 				// dependency implicitly. It internally uses setter or constructor injection.
 				// Autowiring can't be used to inject primitive and string values.
 	private CustomerService customerService;
+
+	@Autowired
+	private AccountService accountService;
+
+	@Autowired
+	private UserDetails userDetails; // adding session scoped bean
 
 	@GetMapping("/customers")
 	public String getCustomersPage(Model model) {
@@ -35,7 +42,7 @@ public class CustomerController {
 	}
 
 	@GetMapping("/getUpdateCustomerPage/{id}") // id is the path variable that we binded in customers.html inside form
-	public String getUpdateCustomerPage(@PathVariable(value = "id") long id, Model model) {
+	public String getUpdateCustomerPage(@PathVariable(value = "id") int id, Model model) {
 		// add data to the model, then pass this model to the template (html file)
 
 		// get customer from the service, and fill it in updateCustomer.html
@@ -64,14 +71,20 @@ public class CustomerController {
 	public String saveCustomer(@ModelAttribute("customer") Customer customer, Model model) {
 		// all the form data will be binded to customer (given parameter) object.
 		// now, we will save customer to database
-		customerService.saveCustomer(customer);
-
+		int accountId = accountService.addAccount(userDetails.getUserId(), "customer");
+		if (accountId != -1) {
+			customer.setAccount_id(accountId);
+			customerService.saveCustomer(customer);
+		} else {
+			System.out.println(
+					"Customer not added because accountId is not created correctly. Check for the right userId (maybe trying to access the page(s) without login/signup)");
+		}
 //		model.addAttribute("listCustomers", customerService.getAllCustomers());
 		return "redirect:/customers";
 	}
 
 	@GetMapping("/deleteCustomer/{id}")
-	public String deleteCustomer(@PathVariable(value = "id") long id, Model model) {
+	public String deleteCustomer(@PathVariable(value = "id") int id, Model model) {
 		// call delete customer method
 		this.customerService.deleteCustomerById(id);
 
@@ -115,7 +128,7 @@ public class CustomerController {
 //	}
 
 	@GetMapping("/showFormForUpdate/{id}") // id is the path variable that we binded in customers.html inside form
-	public String showFormForUpdate(@PathVariable(value = "id") long id, Model model) {
+	public String showFormForUpdate(@PathVariable(value = "id") int id, Model model) {
 		// add data to the model, then pass this model to the template (html file)
 
 		// get customer from the service, and fill it in update_customer.html

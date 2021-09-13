@@ -25,7 +25,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public Expense getExpensebyId(long id) {
+	public Expense getExpensebyId(int id) {
 		Optional<Expense> optional = expenseRepository.findById(id);
 		Expense expense = null;
 		if (optional.isPresent()) {
@@ -37,7 +37,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public void deleteExpenseById(long id) {
+	public void deleteExpenseById(int id) {
 		this.expenseRepository.deleteById(id);
 	}
 }

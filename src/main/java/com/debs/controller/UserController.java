@@ -1,10 +1,6 @@
 package com.debs.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +19,23 @@ public class UserController {
 	// dependency implicitly. It internally uses setter or constructor injection.
 	// Autowiring can't be used to inject primitive and string values.
 	private UserService userService;
-	private long userId;
+
+	@Autowired
+	private UserDetails userDetails; // adding session scoped bean
 
 	@GetMapping("/")
 	public String viewHomePage(Model model) {
 		/* model.addAttribute("listCustomers", customerService.getAllCustomers()); */
-		return "eAccounts";// Thymeleaf template name i.e., index
+//		return "eAccounts";// Thymeleaf template name i.e., index
 
 		// springboot auto configure view resolver for Thymeleaf.
 		// By default, springboot picks up Thymeleaf templates from /resource/template
 		// folder
+
+		// temporary
+		userDetails.setUserId(36);
+//		return "dashboard";
+		return "redirect:/createTransaction";
 	}
 
 	@GetMapping("/dashboard")
@@ -49,18 +52,18 @@ public class UserController {
 	}
 
 	@PostMapping("/verifySignup")
-	public String verifySignup(@ModelAttribute("user") User user, Model model, HttpServletRequest request) {
+	public String verifySignup(@ModelAttribute("user") User user, Model model) {// , HttpServletRequest request
 		if (userService.verifySignup(user) == 1) {
-			userId = user.getId();// save user id for later use
+			userDetails.setUserId(user.getId());// save user id in session scoped bean
 
-			@SuppressWarnings("unchecked")
-			List<Integer> user_ids = (List<Integer>) request.getSession().getAttribute("session_user_ids");
-			if (user_ids == null) {
-				user_ids = new ArrayList<>();
-				request.getSession().setAttribute("session_user_ids", user_ids);
-				user_ids.add(Math.toIntExact(user.getId()));
-			}
-			request.getSession().setAttribute("session_user_ids", user_ids);
+//			@SuppressWarnings("unchecked")
+//			List<Integer> user_ids = (List<Integer>) request.getSession().getAttribute("session_user_ids");
+//			if (user_ids == null) {
+//				user_ids = new ArrayList<>();
+//				request.getSession().setAttribute("session_user_ids", user_ids);
+//				user_ids.add(Math.toIntExact(user.getId()));
+//			}
+//			request.getSession().setAttribute("session_user_ids", user_ids);
 
 			return "redirect:/dashboard";
 		}
@@ -81,22 +84,23 @@ public class UserController {
 	}
 
 	@PostMapping("/verifyLogin")
-	public String verifyLogin(@ModelAttribute("user") User user, Model model, HttpServletRequest request) {
+	public String verifyLogin(@ModelAttribute("user") User user, Model model) {// , HttpServletRequest request
 		if (userService.verifyLogin(user) == 1) {
-			userId = userService.getUserByUsername(user.getUsername()).getId(); // save user id for later use
+			int userId = userService.getUserByUsername(user.getUsername()).getId(); // save user id for later use
+			userDetails.setUserId(userId);// save user id in session scoped bean
 
-			@SuppressWarnings("unchecked")
-			List<Integer> user_ids = (List<Integer>) request.getSession().getAttribute("session_user_ids");
-			if (user_ids == null) {
-				user_ids = new ArrayList<>();
-				request.getSession().setAttribute("session_user_ids", user_ids);
-				user_ids.add(Math.toIntExact(user.getId()));
-			}
+//			@SuppressWarnings("unchecked")
+//			List<Integer> user_ids = (List<Integer>) request.getSession().getAttribute("session_user_ids");
+//			if (user_ids == null) {
+//				user_ids = new ArrayList<>();
+//				request.getSession().setAttribute("session_user_ids", user_ids);
+//				user_ids.add(Math.toIntExact(user.getId()));
+//			}
 //			System.out.println("\n\n\n\n\n\n");
 //			for (int i = 0; i < user_ids.size(); i++)
 //				System.out.println(user_ids.get(i).intValue() + "\t");
 //			System.out.println("\n\n\n\n\n\n");
-			request.getSession().setAttribute("session_user_ids", user_ids);
+//			request.getSession().setAttribute("session_user_ids", user_ids);
 
 			return "redirect:/dashboard";
 		}
@@ -109,7 +113,7 @@ public class UserController {
 
 	@GetMapping("/profile")
 	public String getProfilePage(Model model) {
-		model.addAttribute("user", userService.getUserById(userId));
+		model.addAttribute("user", userService.getUserById(userDetails.getUserId()));
 		return "profile";
 	}
 
@@ -120,7 +124,7 @@ public class UserController {
 
 		// all the form data will be binded to user (given parameter) object.
 		// now, we will save user to database
-		User user1 = userService.getUserById(userId);
+		User user1 = userService.getUserById(userDetails.getUserId());
 		if (!user1.equals(user))
 			userService.saveUser(user);
 
@@ -130,7 +134,7 @@ public class UserController {
 	@PostMapping("/changeUsername")
 	public String changeUsername(@ModelAttribute("user") User user) {
 		if (userService.changeUsername(user) == 1) {
-			User u = userService.getUserById(userId);
+			User u = userService.getUserById(userDetails.getUserId());
 			u.setUsername(user.getNewUsername());
 			user.setNewUsername(null);
 			userService.saveUser(u);
@@ -141,7 +145,7 @@ public class UserController {
 	@PostMapping("/changePassword")
 	public String changePassword(@ModelAttribute("user") User user) {
 		if (userService.changePassword(user) == 1) {
-			User u = userService.getUserById(userId);
+			User u = userService.getUserById(userDetails.getUserId());
 			u.setPassword(user.getNewPassword());
 			user.setNewPassword(null);
 			userService.saveUser(u);
@@ -157,16 +161,16 @@ public class UserController {
 //	}
 
 	@GetMapping("/reports")
-	public String getReportsPage(Model model, HttpSession session) {
-		@SuppressWarnings("unchecked")
-		List<Integer> user_ids = (List<Integer>) session.getAttribute("session_user_ids");
-		@SuppressWarnings("unused")
-		int uid;
-		for (int i = 0; i < user_ids.size(); i++)
-			if (user_ids.get(i).intValue() == Math.toIntExact(userId))
-				uid = user_ids.get(i).intValue();
+	public String getReportsPage(Model model) {// , HttpSession session
+//		@SuppressWarnings("unchecked")
+//		List<Integer> user_ids = (List<Integer>) session.getAttribute("session_user_ids");
+//		@SuppressWarnings("unused")
+//		int uid;
+//		for (int i = 0; i < user_ids.size(); i++)
+//			if (user_ids.get(i).intValue() == userDetails.getUserId())
+//				uid = user_ids.get(i).intValue();
 
-		model.addAttribute("trialBalance", userService.getTrialBalance(Math.toIntExact(userId)));
+		model.addAttribute("trialBalance", userService.getTrialBalance(Math.toIntExact(userDetails.getUserId())));
 		return "reports";
 	}
 

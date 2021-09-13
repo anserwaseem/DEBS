@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.debs.model.Asset;
 
 @Repository
-public interface AssetRepository extends JpaRepository<Asset, Long> {
+public interface AssetRepository extends JpaRepository<Asset, Integer> {
 
 }

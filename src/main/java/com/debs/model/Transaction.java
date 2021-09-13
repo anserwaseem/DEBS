@@ -1,5 +1,7 @@
 package com.debs.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "transaction", schema = "debs1")
@@ -15,19 +18,31 @@ public class Transaction {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private int id;
 	@Temporal(TemporalType.TIMESTAMP)
 	private java.util.Date date;
 	private String account;
 	private String description;
 	private int debit;
 	private int credit;
+	@Transient
+	private String accountType;
 
-	public long getId() {
+	public void setTransaction(String accountType, Date date, String account, int credit, int debit,
+			String description) {
+		this.accountType = accountType;
+		this.date = date;
+		this.account = account;
+		this.description = description;
+		this.debit = debit;
+		this.credit = credit;
+	}
+
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -71,4 +86,11 @@ public class Transaction {
 		this.credit = credit;
 	}
 
+	public String getAccountType() {
+		return accountType;
+	}
+
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
+	}
 }

@@ -9,7 +9,7 @@ public interface VendorService {
 
 	void saveVendor(Vendor vendor);
 
-	Vendor getVendorbyId(long id);
+	Vendor getVendorbyId(int id);
 
-	void deleteVendorById(long id);
+	void deleteVendorById(int id);
 }

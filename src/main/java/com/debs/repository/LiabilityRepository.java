@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.debs.model.Liability;
 
 @Repository
-public interface LiabilityRepository extends JpaRepository<Liability, Long> {
+public interface LiabilityRepository extends JpaRepository<Liability, Integer> {
 
 }

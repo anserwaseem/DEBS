@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.debs.model.Expense;
 
 @Repository
-public interface ExpenseRepository extends JpaRepository<Expense, Long> {
+public interface ExpenseRepository extends JpaRepository<Expense, Integer> {
 
 }

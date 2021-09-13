@@ -16,7 +16,7 @@
     font-size: 22px;
 }
 
-.table-title .add-new {
+.table-title .add-new, .commit {
     float: right;
     height: 30px;
     font-weight: bold;
@@ -27,7 +27,7 @@
     line-height: 13px;
 }
 
-.table-title .add-new i {
+.table-title .add-new i, .commit i {
     margin-right: 4px;
 }
 
@@ -97,7 +97,7 @@ table.table td .add {
 
 
 .bootstrap-select {
-    width: 90% !important;
+    width: 99% !important;
 }
 
 .select,

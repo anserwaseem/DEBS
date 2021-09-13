@@ -9,7 +9,7 @@ public interface AssetService {
 
 	void saveAsset(Asset asset);
 
-	Asset getAssetbyId(long id);
+	Asset getAssetbyId(int id);
 
-	void deleteAssetById(long id);
+	void deleteAssetById(int id);
 }

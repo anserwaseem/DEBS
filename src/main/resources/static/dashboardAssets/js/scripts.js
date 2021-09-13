@@ -100,7 +100,7 @@ jQuery(document).ready(function() {
 });
 
 // displpaying dataTable: for pages; asset, capital, customer, expense, liability, product, vendor
-$("#dataTable").DataTable();
+/*$("#dataTable").DataTable();*/ 
 
 // validating that required fields are not null: for add & update pages of asset, customer, expense, liability, and vendor. 
 function validateForm() {

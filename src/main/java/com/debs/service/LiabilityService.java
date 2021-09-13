@@ -9,7 +9,7 @@ public interface LiabilityService {
 
 	void saveLiability(Liability liability);
 
-	Liability getLiabilitybyId(long id);
+	Liability getLiabilitybyId(int id);
 
-	void deleteLiabilityById(long id);
+	void deleteLiabilityById(int id);
 }

@@ -44,6 +44,9 @@
                   <form action="#" th:action="@{/updateVendor}" th:object="${vendor}" method="post" name="validateUpdateForm" onsubmit="return validateForm()" class="form-validate form-horizontal" id="feedback_form" novalidate="novalidate">
                     <!-- Add hidden form field to handle update -->
 					<input type="hidden" th:field="*{id}" />
+					<!-- Add hidden form field to handle update -->
+					<input type="hidden" th:field="*{account_id}" />
+					
                     <div class="form-group ">
                       <label for="name" class="control-label col-lg-2">Vendor Name <span class="required">*</span></label>
                       <div class="col-lg-10">

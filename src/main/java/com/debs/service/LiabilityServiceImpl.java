@@ -25,7 +25,7 @@ public class LiabilityServiceImpl implements LiabilityService {
 	}
 
 	@Override
-	public Liability getLiabilitybyId(long id) {
+	public Liability getLiabilitybyId(int id) {
 		Optional<Liability> optional = liabilityRepository.findById(id);
 		Liability liability = null;
 		if (optional.isPresent()) {
@@ -37,7 +37,7 @@ public class LiabilityServiceImpl implements LiabilityService {
 	}
 
 	@Override
-	public void deleteLiabilityById(long id) {
+	public void deleteLiabilityById(int id) {
 		this.liabilityRepository.deleteById(id);
 	}
 }

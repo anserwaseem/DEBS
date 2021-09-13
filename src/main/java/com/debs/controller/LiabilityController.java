@@ -9,12 +9,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.debs.model.Liability;
+import com.debs.service.AccountService;
 import com.debs.service.LiabilityService;
 
 @Controller
 public class LiabilityController {
 	@Autowired
 	private LiabilityService liabilityService;
+
+	@Autowired
+	private AccountService accountService;
+
+	@Autowired
+	private UserDetails userDetails; // adding session scoped bean
 
 	@GetMapping("/liabilities")
 	public String getLiabilitiesPage(Model model) {
@@ -34,7 +41,7 @@ public class LiabilityController {
 
 	@GetMapping("/getUpdateLiabilityPage/{id}") // id is the path variable that we binded in liabilities.html inside
 												// form
-	public String getUpdateLiabilityPage(@PathVariable(value = "id") long id, Model model) {
+	public String getUpdateLiabilityPage(@PathVariable(value = "id") int id, Model model) {
 		// add data to the model, then pass this model to the template (html file)
 
 		// get liability from the service, and fill it in updateLiability.html
@@ -59,12 +66,19 @@ public class LiabilityController {
 	public String saveLiability(@ModelAttribute("liability") Liability liability, Model model) {
 		// all the form data will be binded to liability (given parameter) object.
 		// now, we will save liability to database
-		liabilityService.saveLiability(liability);
+		int accountId = accountService.addAccount(userDetails.getUserId(), "liability");
+		if (accountId != -1) {
+			liability.setAccount_id(accountId);
+			liabilityService.saveLiability(liability);
+		} else {
+			System.out.println(
+					"Liability not added because accountId is not created correctly. Check for the right userId (maybe trying to access the page(s) without login/signup)");
+		}
 		return "redirect:/liabilities";
 	}
 
 	@GetMapping("/deleteLiability/{id}")
-	public String deleteLiability(@PathVariable(value = "id") long id, Model model) {
+	public String deleteLiability(@PathVariable(value = "id") int id, Model model) {
 		// call delete liability method
 		this.liabilityService.deleteLiabilityById(id);
 

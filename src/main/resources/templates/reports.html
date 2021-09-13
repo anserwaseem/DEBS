@@ -1,38 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Reports</title>
 
-    <th:block th:include="fragments :: styles"></th:block>
+<head>
+	<title>Reports</title>
+
+	<th:block th:include="fragments :: styles"></th:block>
 	<th:block th:include="fragments :: dataTableCSS"></th:block>
 	<th:block th:include="fragments :: customCSS"></th:block>
-  </head>
+</head>
 
-  <body>
-    <!-- container section start -->
-    <section id="container" class="">
-      <th:block th:include="fragments :: header"></th:block>
-      <!--header end-->
+<body>
+	<!-- container section start -->
+	<section id="container" class="">
+		<th:block th:include="fragments :: header"></th:block>
+		<!--header end-->
 
-      <!--sidebar start-->
-      <th:block th:include="fragments :: sidebar"></th:block>
-      <!--sidebar end-->
+		<!--sidebar start-->
+		<th:block th:include="fragments :: sidebar"></th:block>
+		<!--sidebar end-->
 
-    <!--main content start-->
-    <section id="main-content">
-      <section class="wrapper">
-        <div class="row">
-          <div class="col-lg-12">
-            <h3 class="page-header"><i class="fa fa fa-bars"></i> Pages</h3>
-            <ol class="breadcrumb">
-              <li><i class="fa fa-home"></i><a href="/dashboard">Home</a></li>
-              <li><i class="fa fa-bars"></i>Report</li>
-            </ol>
-          </div>
-        </div>
-        <!-- page start-->
-        Trial Balance (Report) is generated here
-        <div class="row">
+		<!--main content start-->
+		<section id="main-content">
+			<section class="wrapper">
+				<div class="row">
+					<div class="col-lg-12">
+						<h3 class="page-header"><i class="fa fa fa-bars"></i> Pages</h3>
+						<ol class="breadcrumb">
+							<li><i class="fa fa-home"></i><a href="/dashboard">Home</a></li>
+							<li><i class="fa fa-bars"></i>Report</li>
+						</ol>
+					</div>
+				</div>
+				<!-- page start-->
+				Trial Balance (Report) is generated here
+				<div class="row">
 					<div class="col-lg-12">
 						<div class="col-lg-12">
 							<div class="container-fluid" style="width:100%">
@@ -54,6 +55,11 @@
 												<td th:text="${tb.credit}"></td>
 											</tr>
 										</th:block>
+										<tr>
+											<td><b>TOTAL</b></td>
+											<td><b th:text="${#aggregates.sum(trialBalance.![debit])}" /></td>
+											<td><b th:text="${#aggregates.sum(trialBalance.![credit])}" /></td>
+										</tr>
 									</tbody>
 								</table>
 							</div>

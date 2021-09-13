@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.debs.model.TrialBalance;
 
 @Repository
-public interface TrialBalanceRepository extends JpaRepository<TrialBalance, Long> {
+public interface TrialBalanceRepository extends JpaRepository<TrialBalance, Integer> {
 //	@Procedure
 	@Query(value = "CALL ShowTrialBalance (:id);", nativeQuery = true)
 	List<TrialBalance> ShowTrialBalance(@Param("id") int id);

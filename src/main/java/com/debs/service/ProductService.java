@@ -9,7 +9,7 @@ public interface ProductService {
 
 	void saveProduct(Product product);
 
-	Product getProductbyId(long id);
+	Product getProductbyId(int id);
 
-	void deleteProductById(long id);
+	void deleteProductById(int id);
 }

@@ -50,12 +50,6 @@
                       </div>
                     </div>
                     <div class="form-group ">
-                      <label for="description" class="control-label col-lg-2">Description</label>
-                      <div class="col-lg-10">
-                        <input class="form-control valid" th:field="*{description}" id="description" name="description" type="text">
-                      </div>
-                    </div>
-                    <div class="form-group ">
                       <label for="officeName" class="control-label col-lg-2">Vendor Office Name <span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control error" th:field="*{officeName}" id="officeName" name="officeName" type="text" required=""><label for="officeName" class="error">This field is required.</label>
@@ -83,6 +77,12 @@
                       <label for="phone" class="control-label col-lg-2">Vendor Phone <span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control error" th:field="*{phone}" id="phone" type="number" name="phone" required=""><label for="phone" class="error">This field is required.</label>
+                      </div>
+                    </div>
+                    <div class="form-group ">
+                      <label for="description" class="control-label col-lg-2">Description</label>
+                      <div class="col-lg-10">
+                        <input class="form-control valid" th:field="*{description}" id="description" name="description" type="text">
                       </div>
                     </div>
                     <div class="form-group">

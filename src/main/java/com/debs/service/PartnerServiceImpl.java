@@ -25,7 +25,7 @@ public class PartnerServiceImpl implements PartnerService {
 	}
 
 	@Override
-	public Partner getPartnerbyId(long id) {
+	public Partner getPartnerbyId(int id) {
 		Optional<Partner> optional = partnerRepository.findById(id);
 		Partner partner = null;
 		if (optional.isPresent()) {
@@ -37,7 +37,7 @@ public class PartnerServiceImpl implements PartnerService {
 	}
 
 	@Override
-	public void deletePartnerById(long id) {
+	public void deletePartnerById(int id) {
 		this.partnerRepository.deleteById(id);
 	}
 }

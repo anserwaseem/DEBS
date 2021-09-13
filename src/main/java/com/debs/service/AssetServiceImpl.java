@@ -25,7 +25,7 @@ public class AssetServiceImpl implements AssetService {
 	}
 
 	@Override
-	public Asset getAssetbyId(long id) {
+	public Asset getAssetbyId(int id) {
 		Optional<Asset> optional = assetRepository.findById(id);
 		Asset asset = null;
 		if (optional.isPresent()) {
@@ -37,7 +37,7 @@ public class AssetServiceImpl implements AssetService {
 	}
 
 	@Override
-	public void deleteAssetById(long id) {
+	public void deleteAssetById(int id) {
 		this.assetRepository.deleteById(id);
 	}
 }

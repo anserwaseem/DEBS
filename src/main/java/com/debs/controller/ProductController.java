@@ -32,7 +32,7 @@ public class ProductController {
 	}
 
 	@GetMapping("/getUpdateProductPage/{id}") // id is the path variable that we binded in products.html inside form
-	public String getUpdateProductPage(@PathVariable(value = "id") long id, Model model) {
+	public String getUpdateProductPage(@PathVariable(value = "id") int id, Model model) {
 		// add data to the model, then pass this model to the template (html file)
 
 		// get product from the service, and fill it in updateProduct.html
@@ -62,7 +62,7 @@ public class ProductController {
 	}
 
 	@GetMapping("/deleteProduct/{id}")
-	public String deleteProduct(@PathVariable(value = "id") long id, Model model) {
+	public String deleteProduct(@PathVariable(value = "id") int id, Model model) {
 		// call delete product method
 		this.productService.deleteProductById(id);
 

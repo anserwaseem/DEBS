@@ -9,7 +9,11 @@ public interface CustomerService {
 
 	void saveCustomer(Customer customer);
 
-	Customer getCustomerbyId(long id);
+	Customer getCustomerbyId(int id);
 
-	void deleteCustomerById(long id);
+	void deleteCustomerById(int id);
+
+//	List<String> getAllCustomersNames();
+
+//	int addCustomerAccount(int userId);
 }

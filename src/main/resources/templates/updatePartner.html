@@ -44,6 +44,9 @@
                   <form action="#" th:action="@{/updatePartner}" th:object="${partner}" method="post" name="formPartner" onsubmit="return validateFormPartner()" class="form-validate form-horizontal" id="feedback_form" novalidate="novalidate">
                     <!-- Add hidden form field to handle update -->
 					<input type="hidden" th:field="*{id}" />
+					<!-- Add hidden form field to handle update -->
+					<input type="hidden" th:field="*{account_id}" />
+					
                     <div class="form-group ">
                       <label for="name" class="control-label col-lg-2">Partner Name <span class="required">*</span></label>
                       <div class="col-lg-10">
@@ -51,9 +54,9 @@
                       </div>
                     </div>
                     <div class="form-group ">
-                      <label for="amount" class="control-label col-lg-2">Amount <span class="required">*</span></label>
+                      <label for="description" class="control-label col-lg-2">Partner Description</label>
                       <div class="col-lg-10">
-                        <input class="form-control error" th:field="*{amount}" id="amount" name="amount" type="text" required=""><label for="amount" class="error">This field is required.</label>
+                        <input class="form-control error" th:field="*{description}" id="description" name="description" type="text">
                       </div>
                     </div>
                     <div class="form-group">

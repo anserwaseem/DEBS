@@ -7,7 +7,7 @@ import com.debs.model.User;
 
 public interface UserService {
 //	List<User> getAllUsers();
-	User getUserById(long id);
+	User getUserById(int id);
 
 	User getUserByUsername(String username);
 

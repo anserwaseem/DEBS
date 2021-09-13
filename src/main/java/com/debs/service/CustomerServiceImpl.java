@@ -15,6 +15,9 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private CustomerRepository customerRepository;
 
+//	@Autowired
+//	private AccountRepository accountRepository;
+
 	@Override
 	public List<Customer> getAllCustomers() {
 		return customerRepository.findAll();
@@ -26,7 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer getCustomerbyId(long id) {
+	public Customer getCustomerbyId(int id) {
 		Optional<Customer> optional = customerRepository.findById(id);
 		Customer customer = null;
 		if (optional.isPresent()) {
@@ -38,12 +41,26 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public void deleteCustomerById(long id) {
+	public void deleteCustomerById(int id) {
 		this.customerRepository.deleteById(id);
 	}
 
 //	@Override
-//	void updateCustomer(Customer customer) {
-//		this.customerRepository.
+//	public List<String> getAllCustomersNames() {
+//		return customerRepository.findAllCustomersNames();
+//	}
+
+////	@SuppressWarnings("null")
+//	@Override
+//	public int addCustomerAccount(int userId) {
+////		int account_id = java.sql.Types.NUMERIC;
+////		CallableStatement cstmt = null;
+////		try {
+////			cstmt.registerOutParameter(2, java.sql.Types.NUMERIC);
+//////			cstmt.
+////		} catch (SQLException e) {
+////			e.printStackTrace();
+////		}
+//		return accountRepository.addAccount(userId, "customer");
 //	}
 }

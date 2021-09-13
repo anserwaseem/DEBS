@@ -9,12 +9,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.debs.model.Asset;
+import com.debs.service.AccountService;
 import com.debs.service.AssetService;
 
 @Controller
 public class AssetController {
 	@Autowired
 	private AssetService assetService;
+
+	@Autowired
+	private AccountService accountService;
+
+	@Autowired
+	private UserDetails userDetails; // adding session scoped bean
 
 	@GetMapping("/assets")
 	public String getAssetsPage(Model model) {
@@ -32,7 +39,7 @@ public class AssetController {
 	}
 
 	@GetMapping("/getUpdateAssetPage/{id}") // id is the path variable that we binded in assets.html inside form
-	public String getUpdateAssetPage(@PathVariable(value = "id") long id, Model model) {
+	public String getUpdateAssetPage(@PathVariable(value = "id") int id, Model model) {
 		// add data to the model, then pass this model to the template (html file)
 
 		// get asset from the service, and fill it in updateAsset.html
@@ -63,7 +70,14 @@ public class AssetController {
 	public String saveAsset(@ModelAttribute("asset") Asset asset, Model model) {
 		// all the form data will be binded to asset (given parameter) object.
 		// now, we will save asset to database
-		assetService.saveAsset(asset);
+		int accountId = accountService.addAccount(userDetails.getUserId(), "asset");
+		if (accountId != -1) {
+			asset.setAccount_id(accountId);
+			assetService.saveAsset(asset);
+		} else {
+			System.out.println(
+					"Asset not added because accountId is not created correctly. Check for the right userId (maybe trying to access the page(s) without login/signup)");
+		}
 		return "redirect:/assets";
 	}
 
@@ -74,7 +88,7 @@ public class AssetController {
 	}
 
 	@GetMapping("/deleteAsset/{id}")
-	public String deleteAsset(@PathVariable(value = "id") long id, Model model) {
+	public String deleteAsset(@PathVariable(value = "id") int id, Model model) {
 		// call delete asset method
 		this.assetService.deleteAssetById(id);
 

@@ -25,7 +25,7 @@ public class VendorServiceImpl implements VendorService {
 	}
 
 	@Override
-	public Vendor getVendorbyId(long id) {
+	public Vendor getVendorbyId(int id) {
 		Optional<Vendor> optional = vendorRepository.findById(id);
 		Vendor vendor = null;
 		if (optional.isPresent()) {
@@ -37,7 +37,7 @@ public class VendorServiceImpl implements VendorService {
 	}
 
 	@Override
-	public void deleteVendorById(long id) {
+	public void deleteVendorById(int id) {
 		this.vendorRepository.deleteById(id);
 	}
 }

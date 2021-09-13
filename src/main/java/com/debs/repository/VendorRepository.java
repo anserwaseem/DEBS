@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.debs.model.Vendor;
 
 @Repository
-public interface VendorRepository extends JpaRepository<Vendor, Long> {
+public interface VendorRepository extends JpaRepository<Vendor, Integer> {
 
 }

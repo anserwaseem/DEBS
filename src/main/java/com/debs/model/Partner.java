@@ -13,15 +13,16 @@ public class Partner {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private int id;
+	private int account_id;
 	private String name;
-	private String amount;
+	private String description;
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -33,17 +34,17 @@ public class Partner {
 		this.name = name;
 	}
 
-	public String getAmount() {
-		return amount;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setAmount(String amount) {
-		this.amount = amount;
+	public void setDescription(String amount) {
+		this.description = amount;
 	}
 
 	@Override
 	public String toString() {
-		return "id: " + id + " name: " + name + " amount: " + amount;
+		return "id: " + id + " name: " + name + " amount: " + description;
 	}
 
 	@Override
@@ -63,9 +64,17 @@ public class Partner {
 		Partner partner = (Partner) obj; // partner is callee here
 
 		// if caller's required attributes equal to callee's required attributes
-		if (this.name.equals(partner.getName()) && this.amount.equals(partner.getAmount()))
+		if (this.name.equals(partner.getName()) && this.description.equals(partner.getDescription()))
 			return true;
 
 		return false;
+	}
+
+	public int getAccount_id() {
+		return account_id;
+	}
+
+	public void setAccount_id(int account_id) {
+		this.account_id = account_id;
 	}
 }

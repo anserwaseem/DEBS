@@ -9,7 +9,7 @@ public interface PartnerService {
 
 	void savePartner(Partner partner);
 
-	Partner getPartnerbyId(long id);
+	Partner getPartnerbyId(int id);
 
-	void deletePartnerById(long id);
+	void deletePartnerById(int id);
 }
