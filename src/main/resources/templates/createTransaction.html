@@ -1,37 +1,37 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
-	<title>Create Transaction</title>
-	
-	<th:block th:include="fragments :: styles"></th:block>
+<title>Create Transaction</title>
 
-	<!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">-->
+<th:block th:include="fragments :: styles"></th:block>
 
-	<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+<!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">-->
+
+<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css" integrity="sha512-ARJR74swou2y0Q2V9k0GbzQ/5vJ2RBSoCWokg4zkfM29Fb3vZEQyv0iWBMW/yvKgyHSR/7D64pFMmU8nYmbRkg==" crossorigin="anonymous" referrerpolicy="no-referrer" />-->
 
-	<!-- bootstrap-select CSS -->
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.0/css/bootstrap-select.css"
-		integrity="sha512-fbGrX/r0npKKqlimb6PTYM51KC1aAmZtP3srWTAKiavy3ISb0B2SrA4SXCePEZxphpjJJn6+OoAUxxqbHUD5Sw=="
-		crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.css" />-->
-	<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.0/css/bootstrap-select.min.css" integrity="sha512-1hQ0wnPEohu/PrOMp1AZ0+jlYzGLdWZW5FK24K5Ukf8iPTv6e5YkyaSNTTdZh2yvSfDRPSjwv0JyJ72jaOAWcw==" crossorigin="anonymous" referrerpolicy="no-referrer" />-->
+<!-- bootstrap-select CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.0/css/bootstrap-select.css"
+	integrity="sha512-fbGrX/r0npKKqlimb6PTYM51KC1aAmZtP3srWTAKiavy3ISb0B2SrA4SXCePEZxphpjJJn6+OoAUxxqbHUD5Sw=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.css" />-->
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.0/css/bootstrap-select.min.css" integrity="sha512-1hQ0wnPEohu/PrOMp1AZ0+jlYzGLdWZW5FK24K5Ukf8iPTv6e5YkyaSNTTdZh2yvSfDRPSjwv0JyJ72jaOAWcw==" crossorigin="anonymous" referrerpolicy="no-referrer" />-->
 
-	
-	<th:block th:include="fragments :: customCSS"></th:block>
-	
-	<!-- Custom styles -->
-	<link href="/dashboardAssets/css/transaction-style.css" rel="stylesheet" />
-	<!--<link href="/dashboardAssets/css/jquery-ui-1.10.4.min.css" rel="stylesheet" />-->
+<th:block th:include="fragments :: customCSS"></th:block>
+
+<!-- Custom styles -->
+<link href="/dashboardAssets/css/transaction-style.css" rel="stylesheet" />
+<!--<link href="/dashboardAssets/css/jquery-ui-1.10.4.min.css" rel="stylesheet" />-->
 </head>
 
 <body>
 	<!-- container section start -->
-	<section id="container" class="">
+	<section id="container">
 		<!-- header start -->
+
 		<th:block th:include="fragments :: header"></th:block>
 		<!--header end-->
 
@@ -44,7 +44,9 @@
 			<section class="wrapper">
 				<div class="row">
 					<div class="col-lg-12">
-						<h3 class="page-header"><i class="fa fa fa-bars"></i> Transaction</h3>
+						<h3 class="page-header">
+							<i class="fa fa fa-bars"></i> Transaction
+						</h3>
 						<ol class="breadcrumb">
 							<li><i class="fa fa-home"></i><a href="/dashboard">Home</a></li>
 							<li><i class="fa fa-bars"></i>Transaction</li>
@@ -56,79 +58,80 @@
 
 				<div class="row">
 					<div class="container">
-						<div class="table-wrapper">
-							<div class="table-title">
-								<div class="row">
-									<div class="col-sm-8">
-										<h2>Create <b>Transaction</b></h2>
-									</div>
-									<div class="col-sm-4">
-										<button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i>
-											Add New</button>
+						<form action="/commitTransaction" th:object="${transactionForm}"
+							method="post">
+							<div class="table-wrapper">
+								<div class="table-title">
+									<div class="row">
+										<div class="col-sm-8">
+											<h2>
+												Create <b>Transaction</b>
+											</h2>
+										</div>
+										<div class="col-sm-4">
+											<button type="button" class="btn btn-info add-new">
+												<i class="fa fa-plus"></i> Add New
+											</button>
+										</div>
 									</div>
 								</div>
-							</div>
-							<table class="table table-bordered" id="transactionTable">
-								<thead>
-									<tr>
-										<th>Account</th>
-										<th>Debit</th>
-										<th>Credit</th>
-										<th>Description</th>
-										<th>Actions</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<!--<div class="row-fluid">-->
-											<select class="selectpicker" data-live-search="true"
+								<table class="table table-bordered" id="transactionTable">
+									<thead>
+										<tr>
+											<th>Account</th>
+											<th>Debit</th>
+											<th>Credit</th>
+											<th>Description</th>
+											<th>Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>
+												<!--<div class="row-fluid">--> <select class="selectpicker"
+												data-live-search="true"
 												data-live-search-placeholder="Search">
-												<option value=""> -- Nothing Selected -- </option>
-												<optgroup label="Customers">
-													<option th:text="${customer}"
-														th:each="customer : ${customerAccounts}"></option>
-												</optgroup>
-												<optgroup label="Vendors">
-													<option th:text="${vendor}" th:each="vendor : ${vendorAccounts}">
-													</option>
-												</optgroup>
-												<optgroup label="Assets">
-													<option th:text="${asset}" th:each="asset : ${assetAccounts}">
-													</option>
-												</optgroup>
-												<optgroup label="Liabilities">
-													<option th:text="${liability}"
-														th:each="liability : ${liabilityAccounts}"></option>
-												</optgroup>
-												<optgroup label="Expenses">
-													<option th:text="${expense}" th:each="expense : ${expenseAccounts}">
-													</option>
-												</optgroup>
-												<optgroup label="Partner">
-													<option th:text="${partner}" th:each="partner : ${partnerAccounts}">
-													</option>
-												</optgroup>
-											</select>
-											<!--</div>-->
-										</td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td>
-											<a class="add" title="Add" data-toggle="tooltip"><i
-													class="material-icons"></i></a>
-											<a class="edit" title="Edit" data-toggle="tooltip"><i
-													class="material-icons"></i></a>
-											<a class="delete" title="Delete" data-toggle="tooltip"><i
-													class="material-icons"></i></a>
-										</td>
-									</tr>
+													<option value="">-- Nothing Selected --</option>
+													<optgroup label="Customers">
+														<option th:text="${customer}"
+															th:each="customer : ${customerAccounts}"></option>
+													</optgroup>
+													<optgroup label="Vendors">
+														<option th:text="${vendor}"
+															th:each="vendor : ${vendorAccounts}"></option>
+													</optgroup>
+													<optgroup label="Assets">
+														<option th:text="${asset}"
+															th:each="asset : ${assetAccounts}"></option>
+													</optgroup>
+													<optgroup label="Liabilities">
+														<option th:text="${liability}"
+															th:each="liability : ${liabilityAccounts}"></option>
+													</optgroup>
+													<optgroup label="Expenses">
+														<option th:text="${expense}"
+															th:each="expense : ${expenseAccounts}"></option>
+													</optgroup>
+													<optgroup label="Partners">
+														<option th:text="${partner}"
+															th:each="partner : ${partnerAccounts}"></option>
+													</optgroup>
+											</select> <!--</div>-->
+											</td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td><a class="add" title="Add" data-toggle="tooltip"><i
+													class="material-icons"></i></a> <a class="edit" title="Edit"
+												data-toggle="tooltip"><i class="material-icons"></i></a> <a
+												class="delete" title="Delete" data-toggle="tooltip"><i
+													class="material-icons"></i></a></td>
+										</tr>
 
-								</tbody>
-							</table>
+									</tbody>
+								</table>
 
-							<!--<p>
+								<!--<p>
 									<input type="button" id="addRow" value="Add New Row" onclick="addNewRow();" />
 								</p>
 
@@ -139,17 +142,18 @@
 								</p>-->
 
 
-							<!--<p id='output' type="hidden" ></p>-->
-							<div class="row">
-								<div class="col-sm-12">
-									<form action="/commitTransaction" th:object="${transactionForm}" method="post">
-										<input id='text' type="text" hidden th:field="*{rowsOfTransaction}" />
-										<button class="btn btn-primary commit" type="submit"><i class="fa fa-check"></i>
-											Commit</button>
-									</form>
+								<!--<p id='output' type="hidden" ></p>-->
+								<div class="row">
+									<div class="col-sm-12">
+										<input id='text' type="text" hidden="true"
+											th:field="*{rowsOfTransaction}" />
+										<button class="btn btn-primary commit" type="submit">
+											<i class="fa fa-check"></i> Commit
+										</button>
+									</div>
 								</div>
 							</div>
-						</div>
+						</form>
 					</div>
 				</div>
 
@@ -172,9 +176,9 @@
 	<!--main content end-->
 
 	<!-- javascripts -->
-	
+
 	<th:block th:include="fragments :: javascripts"></th:block>
-	
+
 	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js" integrity="sha512-yDlE7vpGDP7o2eftkCiPZ+yuUyEcaBwoJoIhdXv71KZWugFqEphIS3PU60lEkFaz8RxaVsMpSvQxMBaKVwA5xg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>-->
@@ -197,7 +201,8 @@
 	<!--<script src="/dashboardAssets/js/bootstrap.min.js"></script>-->
 	<!-- nice scroll -->
 	<!-- bootstrap-select -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"
 		integrity="sha512-yDlE7vpGDP7o2eftkCiPZ+yuUyEcaBwoJoIhdXv71KZWugFqEphIS3PU60lEkFaz8RxaVsMpSvQxMBaKVwA5xg=="
 		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.js"></script>-->

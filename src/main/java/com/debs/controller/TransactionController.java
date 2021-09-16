@@ -79,9 +79,11 @@ public class TransactionController {
 	@PostMapping("/commitTransaction")
 	public String saveTransaction(@ModelAttribute("transactionForm") TransactionCreationDto transactionForm,
 			Model model) {
-		System.out.println("\n\n" + transactionForm.getRowsOfTransaction() + "\n\n");
-		if (transactionService.commitTransaction(transactionForm.getRowsOfTransaction(), userDetails.getUserId()))
-			return "redirect:/listTransactions";
+		System.out.println("\n\n" + transactionForm.getRowsOfTransaction() + "\n\n"
+				+ Boolean.valueOf(transactionForm.getRowsOfTransaction()).equals(Boolean.FALSE));
+		if (Boolean.valueOf(transactionForm.getRowsOfTransaction()).equals(Boolean.FALSE)) // if there exists some data
+			if (transactionService.commitTransaction(transactionForm.getRowsOfTransaction(), userDetails.getUserId()))
+				return "redirect:/listTransactions";
 
 		return "redirect:/createTransaction";
 	}

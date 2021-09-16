@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<title>Reports</title>
@@ -57,8 +57,8 @@
 										</th:block>
 										<tr>
 											<td><b>TOTAL</b></td>
-											<td><b th:text="${#aggregates.sum(trialBalance.![debit])}" /></td>
-											<td><b th:text="${#aggregates.sum(trialBalance.![credit])}" /></td>
+											<td><b th:text="${#aggregates.sum(trialBalance.![debit])}" /></b></td>
+											<td><b th:text="${#aggregates.sum(trialBalance.![credit])}" /></b></td>
 										</tr>
 									</tbody>
 								</table>

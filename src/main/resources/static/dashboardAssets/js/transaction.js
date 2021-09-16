@@ -2,6 +2,8 @@ $(document).ready(function() {
 	$('[data-toggle="tooltip"]').tooltip();
 	var accounts = $("table td:first-child select").get(0).outerHTML;
 	var actions = $("table td:last-child").html();
+
+
 	// Append table with add row form on add new button click
 	$(".add-new").click(function() {
 		$(this).attr("disabled", "disabled");
@@ -16,7 +18,7 @@ $(document).ready(function() {
 			// '<td><div class="row-fluid"><select class="selectpicker" data-live-search="true"><option>Tom Foolery</option><option>Bill Gordon</option><option>Elizabeth Warren</option><option>Mario Flores</option><option>Don Young</option><option>Marvin Martinez</option></select></div></td>' +
 			'<td><input type="text" class="form-control" name="debit"></td>' +
 			'<td><input type="text" class="form-control" name="credit"></td>' +
-			'<td><input type="text" class="form-control" name="description"></td>' +
+			'<td><input type="text" class="form-control" name="description"></td>' + //description, set " " value by default; will be treated as empty
 			/*'<td><input type="text" class="form-control" name="maturityDate"></td>' +*/
 			"<td>" +
 			actions +
@@ -30,11 +32,14 @@ $(document).ready(function() {
 		$('[data-toggle="tooltip"]').tooltip();
 		$('.selectpicker').selectpicker('render');
 	});
+
+
 	// Add row on add button click
 	$(document).on("click", ".add", function() {
 		var empty = false;
-		var input = $(this).parents("tr").find('input[type="text"]');//:not(:first)
-		input.each(function() {
+		var input = $(this).parents("tr").find('input[type="text"]'); // find all inputs
+
+		input.not(":last").each(function() { // check if any input is empty, except last (description)
 			if (!$(this).val()) {
 				$(this).addClass("error");
 				empty = true;
@@ -51,6 +56,8 @@ $(document).ready(function() {
 			$(".add-new").removeAttr("disabled");
 		}
 	});
+
+
 	// Edit row on edit button click
 	$(document).on("click", ".edit", function() {
 		$(this)
@@ -64,29 +71,21 @@ $(document).ready(function() {
 				);
 			});
 		/*$(this)
-		 .parents("tr")
-		 .find('input[name="account"]')
-		 .attr("value", $(this).text());
-		$(this)
-		 .parents("tr")
-		 .find('input[name="credit"]')
-		 .attr("value", "0");
-		$(this)
-		 .parents("tr")
-		 .find('input[name="debit"]')
-		 .attr("value", "0");
-		$(this)
-		 .parents("tr")
-		 .find('input[name="description"]')
-		 .attr("value", $(this).text());*/
+			.parents("tr")
+			.find("td:nth-last-child(2) > input")
+			.attr("value", " ");*///description, set " " value by default; will be treated as empty
 		$(this).parents("tr").find(".add, .edit").toggle();
 		$(".add-new").attr("disabled", "disabled");
 	});
+
+
 	// Delete row on delete button click
 	$(document).on("click", ".delete", function() {
 		$(this).parents("tr").remove();
 		$(".add-new").removeAttr("disabled");
 	});
+
+
 	// Submit all data on button click
 	$(document).on("click", ".commit", function() {
 		var myTab = document.getElementById('transactionTable');
@@ -99,19 +98,18 @@ $(document).ready(function() {
 			optGroupLabels.push(optGroupTags.item(o).getAttribute('label'));
 		}
 		optGroupLabels = [... new Set(optGroupLabels)];// save only unique values
-		console.log(optGroupLabels);
+		/*console.log(optGroupLabels);*/
 
 		// save label of each selected optgroup
 		var selectedOptGroupLabels = new Array();
-		// find all elements having class name = "optgroup-", and then find class "selected" among each of those elements. Finally, get the optgroup number(s) of selected option by the user. 
-		document.querySelectorAll("*[class^=\"optgroup-\"]").forEach((element) => {
+		// find all elements having class name = "optgroup-", AND class "selected". Then get the optgroup number(s) of selected option by the user. 
+		document.querySelectorAll("*[class^=\"optgroup-\"].selected").forEach((element) => {
 			var ele = element.className;
-			var indexOfEle = ele.search("selected");
-			if (indexOfEle != -1) {// if found
-				var optGroupNumber = ele[indexOfEle - 2];// -2 because indexOfEle is the starting index of "selected" class, -2 will get the targetted optgroup number
-				selectedOptGroupLabels.push(optGroupLabels[optGroupNumber - 1]);//-1 because optGroupsLabels array is starting from 0, while optgroups start from 1*/
-			}
-		}); console.log(selectedOptGroupLabels);
+			var indexOfEle = ele.search("optgroup-");
+			var optGroupNumber = ele[indexOfEle + 9];// +9 because indexOfEle is the starting index of where "optgroup-" class starts, +9 will get the targetted optgroup number
+			selectedOptGroupLabels.push(optGroupLabels[optGroupNumber - 1]);//-1 because optGroupsLabels array is starting from 0, while optgroups start from 1*/
+
+		}); /*console.log(selectedOptGroupLabels);*/
 
 		var arrValues = new Array();
 		var errorInInput = false;
@@ -156,17 +154,17 @@ $(document).ready(function() {
 
 			// loop through each cell in a row.
 			for (c = 1; c < myTab.rows[row].cells.length - 1; c++) {
-				element = myTab.rows.item(row).cells[c];
+				element = myTab.rows.item(row).cells[c].innerHTML;
 
 				if (c < 3) {//if it's debit or credit, check that their value must only be digit(s)
-					if (/^\d+$/.test(element.innerHTML)) {
-						arrValues.push(element.innerHTML);
-					} else {
+					if (/^\d+$/.test(element))
+						arrValues.push(element);
+					else
 						errorInInput = true;
-					}
-				} else {
-					arrValues.push(element.innerHTML);
+				} else { // add description as it is
+					arrValues.push(element);
 				}
+
 				if (errorInInput)
 					break;
 			}
@@ -174,7 +172,7 @@ $(document).ready(function() {
 
 		// The final output.
 		if (errorInInput)
-			document.getElementById('text').value = "Wrong input format";
+			document.getElementById('text').value = "";//Wrong input format
 		else
 			document.getElementById('text').value = arrValues.toString();
 		console.log(arrValues.toString());

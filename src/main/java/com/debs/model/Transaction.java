@@ -1,7 +1,5 @@
 package com.debs.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +26,7 @@ public class Transaction {
 	@Transient
 	private String accountType;
 
-	public void setTransaction(String accountType, Date date, String account, int credit, int debit,
+	public void setTransaction(String accountType, java.util.Date date, String account, int credit, int debit,
 			String description) {
 		this.accountType = accountType;
 		this.date = date;
@@ -36,6 +34,21 @@ public class Transaction {
 		this.description = description;
 		this.debit = debit;
 		this.credit = credit;
+	}
+
+	public void setTransaction(Transaction t) {
+		this.accountType = t.getAccountType();
+		this.date = t.getDate();
+		this.account = t.getAccount();
+		this.description = t.getDescription();
+		this.debit = t.getDebit();
+		this.credit = t.getCredit();
+	}
+
+	@Override
+	public String toString() {
+		return "id: " + id + " accountType: " + accountType + " account: " + account + " debit: " + debit + " credit: "
+				+ credit + " description: " + description + " date: " + date.toString();
 	}
 
 	public int getId() {
